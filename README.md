@@ -3,6 +3,8 @@
 ![n8n](https://img.shields.io/badge/Workflow-n8n-ff6d5a?style=for-the-badge&logo=n8n)
 ![Supabase](https://img.shields.io/badge/Database-Supabase-3ecf8e?style=for-the-badge&logo=supabase)
 ![Roblox](https://img.shields.io/badge/API-Roblox-000000?style=for-the-badge&logo=roblox)
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
+[![Website](https://img.shields.io/badge/Website-Fuenzer%20Studio-blue?style=flat&logo=google-chrome)](https://fuenzerstudio.netlify.app)
 
 **Automated changes to Roblox games data such as visits, likes, favorites, and members using n8n with data stored in Supabase.**
 
@@ -12,7 +14,7 @@ This repository hosts an n8n workflow designed to track and archive the growth o
 
 ## 📸 Workflow Preview
 
-<img width="1168" height="621" alt="Screenshot (315)" src="https://github.com/user-attachments/assets/6a3b4a95-752f-4cb7-a841-b60f1a3bfd2c" />
+![Workflow Screenshot](./workflow-image.png)
 
 ## ✨ Features
 
