@@ -14,7 +14,7 @@ This repository hosts an n8n workflow designed to track and archive the growth o
 
 ## 📸 Workflow Preview
 
-![Workflow Overview](./workflow-image.png)
+![Workflow Overview](./workflow-image-roblox.png)
 
 ## ✨ Features
 
