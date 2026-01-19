@@ -14,7 +14,7 @@ This repository hosts an n8n workflow designed to track and archive the growth o
 
 ## 📸 Workflow Preview
 
-![Workflow Screenshot](./workflow-image.png)
+![Workflow Overview](./workflow-image.png)
 
 ## ✨ Features
 
@@ -30,25 +30,61 @@ This repository hosts an n8n workflow designed to track and archive the growth o
 
 * **Automation:** [n8n](https://n8n.io/) (Self-hosted/Cloud)
 * **Database:** [Supabase](https://supabase.com/) (PostgreSQL)
-* **Source:** Roblox Web Web API (Games & Groups endpoints)
+* **Source:** Roblox Web API (Games & Groups endpoints)
 
 ## 🚀 How to Use
 
-1.  **Import Workflow:**
-    * Download the `.json` file from this repository.
-    * Open your n8n editor.
-    * Click usually in the top right menu: `Import from File`.
+### 1. Import Workflow
+* Download the `.json` file from this repository.
+* Open your n8n editor.
+* Click the menu (top right) and select `Import from File`.
 
-2.  **Configure Nodes:**
-    * **Get Group Members:** Update the `group_id` in the URL.
-    * **Get Game Stats:** Update the `universe_id` in the URL.
-    * **HTTP Request (Supabase):**
-        * Set Method to `POST`.
-        * Add your Supabase URL.
-        * Add Headers: `apikey` and `Authorization` (Bearer token).
+### 2. Configure Nodes
 
-3.  **Activate:**
-    * Toggle the workflow to **Active**.
+Follow the steps below to configure each node with your own Roblox IDs and Database credentials.
+
+#### ⏰ Schedule (Update Tiap 1 Jam / Update every 1 hour)
+* Set the **Trigger Interval** (e.g., Every 1 Hour) based on how often you want to track data.
+
+#### 👥 Get Group Members
+* **Method:** `GET`
+* **URL:** Replace the number at the end with **your Group ID**.
+    ```text
+    https://groups.roblox.com/v1/groups/YOUR_GROUP_ID
+    ```
+    *Example:* `https://groups.roblox.com/v1/groups/32462874`
+
+#### 🎮 Get Game Stats
+* **Method:** `GET`
+* **URL:** Replace the numbers after `universeIds=` with your **Game Universe IDs** (comma-separated).
+    ```text
+    https://games.roblox.com/v1/games?universeIds=ID1,ID2,ID3
+    ```
+    *Note: Use Universe ID, not Place ID.*
+
+#### 👍 Get Game Likes
+* **Method:** `GET`
+* **URL:** Use the same Universe IDs as above.
+    ```text
+    https://games.roblox.com/v1/games/votes?universeIds=ID1,ID2,ID3
+    ```
+
+#### 📝 Format Data
+* This node maps the raw API data into a clean JSON structure.
+* You can modify the JavaScript code here if you want to add/remove specific metrics.
+
+#### 💾 HTTP Request (Supabase)
+* **Method:** `POST`
+* **URL:** Enter your Supabase Table REST URL.
+    * *Format:* `https://<PROJECT_REF>.supabase.co/rest/v1/<TABLE_NAME>`
+* **Authentication:**
+    * Select **Predefined Credential Type** -> **Supabase API**.
+    * Create a new credential and input your **Supabase Service Role Key** (or Anon Key if RLS is configured).
+* **Headers:**
+    * Ensure `Prefer` header is set to `resolution=merge-duplicates` if you want to update existing rows instead of creating duplicates (Upsert).
+
+### 3. Activate
+* Toggle the workflow to **Active** in the top right corner.
 
 ## 📝 Data Structure
 
@@ -56,10 +92,10 @@ The workflow prepares a JSON object similar to this before sending to Supabase:
 
 ```json
 {
-  "timestamp": "2026-01-07T15:00:00.000Z",
-  "group_members": 1500,
-  "visits": 25000,
-  "likes": 340,
-  "favorites": 120
+  "id": "fuenzer_group",
+  "name": "Fuenzer Studio",
+  "members": 1500,
+  "visits": 0,
+  "likes": 0,
+  "favorites": 0
 }
-```
